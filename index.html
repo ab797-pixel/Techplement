@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes for day </title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <script src="bootstrap/js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container-fluid">
+ 
+    
+        <div class="row" id="nav-bar">
+            <div id="header" class="col-md-3 col-sm-4"><strong>QUOTES</strong> <span style="color:black">.</span>             
+            </div>
+            <div id="name" class="col-md-6 col-sm-5">MOHAMED ABDULLA <span  id="role">PHP DEVELOPER</span></div>
+
+             <div class="col-md-1 col-sm-1">LinedIn</div>
+             <div class="col-md-1 col-sm-1">GitHub</div>
+             <div class="col-md-1 col-sm-1">IntsaGram</div>     
+                
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        DAILY QUOTES BY <span id="author"> Itachi</span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <form id="form_author" class="row">
+                                <label for="search_author" class="col-sm-3" style="margin-top:6px">Search author:</label>
+                                 <input type="text" class="form-control col-sm-6" name="search_author">
+                                 <input type="submit" class="btn btn-primary col-md-2" value="Search">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="card-body" >
+            <blockquote id="quote-body" style="font-size:20px;">
+                No matter how powerfull become, Do not try to shoulder everything alone. if you do, you will surely fail.
+            </blockquote>
+            </div>
+           
+            <div class="card-footer">
+                <div class="row">
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3"></div>
+                  <div class="col-md-3">
+                    <button class="btn btn-info" id="change">Change Quotes</button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</body>
+<script>
+    
+    $(document).ready(function(){
+        random();
+        $('#change').click(function(){
+            $(this).html('Loading...');
+        });
+        $(document).submit('#form_author',function(){
+            console.log("submit is clicked");
+           let author = $('#search_author').val();
+
+            $.ajax({
+         url:"https://api.quotable.io/quotes/author/query ="+author,
+         type: 'get',
+         success: function(data){
+          console.log(data);
+           },
+           error: function(){
+            alert('Connect the Internet:This application only worked on internet ');
+           },
+         });
+        })
+    });
+    function random(){
+        $.ajax({
+         url:"https://api.quotable.io/quotes/random",
+         type: 'get',
+         success: function(data){
+           $('#quote-body').html(data[0].content);
+           $('#author').html(data[0].author);
+           $('#change').html('Change Quotes');
+           },
+           error: function(){
+            $('#change').html('Try Again');
+            alert('Connect the Internet:This application only worked on internet');
+           },
+         });
+    }
+    
+    
+</script>
+</html>

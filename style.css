@@ -1,0 +1,27 @@
+body{
+    margin:auto;
+    padding: 0;
+}
+#nav-bar{
+    background-color: #00ffff;
+    color:red;
+}
+#header{
+    font-size:40px;
+}
+#role{
+    font-size:26px
+}
+#name{  
+    text-align:center;
+    font-size:30px;
+    color:blue;
+    padding:0%;
+}
+.card{
+    margin-top: 20vh;
+    width: 100%;
+}
+#quote-body{
+    text-align: center;
+}
