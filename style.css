@@ -1,6 +1,9 @@
 body{
     margin:auto;
     padding: 0;
+    background-image: url("img.jpg");
+    max-width: 100%;
+    height: auto;
 }
 #nav-bar{
     background-color: #00ffff;
@@ -25,3 +28,23 @@ body{
 #quote-body{
     text-align: center;
 }
+@media only screen and (max-width: 600px) {
+    #header {
+      text-align: center;
+    }
+    .labell{
+        display:none;
+    }
+   
+  }
+  @media only screen and (max-width: 800px) {
+    #search{
+        width:25%;
+    }
+    #search_author{
+        width:50%;
+    }
+    .sea{
+        width:20%;
+    }
+  }

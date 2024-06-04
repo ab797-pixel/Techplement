@@ -18,15 +18,15 @@
             <div id="header" class="col-md-3 col-sm-4"><strong>QUOTES</strong> <span style="color:black">.</span>             
             </div>
             <div id="name" class="col-md-6 col-sm-5">MOHAMED ABDULLA <span  id="role">PHP DEVELOPER</span></div>
-
-             <div class="col-md-1 col-sm-1">LinedIn</div>
-             <div class="col-md-1 col-sm-1">GitHub</div>
-             <div class="col-md-1 col-sm-1">IntsaGram</div>     
+             
+             <div class="col-md-1 col-sm-1 labell">LinedIn</div>
+             <div class="col-md-1 col-sm-1 labell">GitHub</div>
+             <div class="col-md-1 col-sm-1 labell">IntsaGram</div>     
                 
 
         </div>
     </div>
-    <div class="container">
+    <div class="container" >
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -35,11 +35,11 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <form id="form_author" class="row">
-                                <label for="search_author" class="col-sm-3" style="margin-top:6px">Search author:</label>
-                                 <input type="text" class="form-control col-sm-6" name="search_author">
-                                 <input type="submit" class="btn btn-primary col-md-2" value="Search">
-                            </form>
+                            <div  class="row">
+                                <div class="col-md-4"></div>
+                                 <input type="text" class="form-control col-sm-6" placeholder="Author Name" id="search_author" name="search_author">
+                                 <input  class="btn btn-primary col-md-2" id="search" value="Search">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,21 +71,26 @@
         $('#change').click(function(){
             $(this).html('Loading...');
         });
-        $(document).submit('#form_author',function(){
-            console.log("submit is clicked");
-           let author = $('#search_author').val();
 
-            $.ajax({
-         url:"https://api.quotable.io/quotes/author/query ="+author,
-         type: 'get',
-         success: function(data){
-          console.log(data);
-           },
-           error: function(){
-            alert('Connect the Internet:This application only worked on internet ');
-           },
+        $(document).on('click','#search',function(){
+          $(this).attr('value','wait..');
+         console.log("submit is clicked");
+         let author = $("#search_author").val();
+        //GET /quotes?author=albert-einstein
+         $.ajax({
+            type:'get',
+            url:'https://api.quotable.io/quotes?author='+author,
+            success: function(res){
+                console.log(res.results[0].content);
+                $('#quote-body').html(res.results[0].content);
+                $('#author').html(res.results[0].author);
+                $('#search').attr('value','search');
+            },
+            error: function(){
+                console.log("check internet");
+            }
          });
-        })
+        });
     });
     function random(){
         $.ajax({
