@@ -70,6 +70,7 @@
         random();
         $('#change').click(function(){
             $(this).html('Loading...');
+            random();
         });
 
         $(document).on('click','#search',function(){
@@ -97,6 +98,7 @@
          url:"https://api.quotable.io/quotes/random",
          type: 'get',
          success: function(data){
+            console.log(data);
            $('#quote-body').html(data[0].content);
            $('#author').html(data[0].author);
            $('#change').html('Change Quotes');

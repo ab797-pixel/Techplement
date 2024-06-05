@@ -40,11 +40,17 @@ body{
   @media only screen and (max-width: 800px) {
     #search{
         width:25%;
+        text-align: right;
     }
     #search_author{
         width:50%;
+        text-align: right;
     }
     .sea{
         width:20%;
+        text-align: right;
+    }
+    .form-group{
+        text-align: right;
     }
   }
