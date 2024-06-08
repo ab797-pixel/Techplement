@@ -35,7 +35,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-4">
-                        DAILY QUOTES BY <span id="author"> Itachi</span>
+                        DAILY QUOTES
                     </div>
                     
                     <div class="col-md-8">
@@ -67,20 +67,21 @@
                   <div class="col-md-3"></div>
                   <div class="col-md-3"></div>
                   <div class="col-md-3">
-                    <button class="btn btn-info" id="change">Change Quotes</button>
+                   <strong>-<span id="author"> Itachi</span></strong> 
                 </div>
                 </div>
             </div>
+        </div>
+        <div id="list_quotes">
+            <h2 id="title" style="text-align:center;margin:25px;background-color: #281970;color:white"><strong>Search Author</strong></h2>
         </div>
     </div> 
 </body>
 <script>
 
     $(document).ready(function(){
-        $('#change').click(function(){
-            $(this).html('Loading...');
-            random();
-        });
+         $('#title').hide();
+         setInterval(random, 4000);
 
         $(document).on('click','#search',function(){
           $(this).html('wait..');
@@ -91,21 +92,35 @@
          url:"https://api.quotable.io/search/authors?query="+author,
          type: 'get',
          success: function(data){
-            console.log(data);
+           
            let random = Math.floor(Math.random() * data.totalCount);
            let author_name = data.results[random].name
-           console.log(author_name);
+           
            $.ajax({
              //  GET /quotes?author=albert-einstein
             type:'get',
             url:'https://api.quotable.io/quotes?author='+author_name,
             success: function(res1){
                 console.log(res1);
-                let random_quotes = Math.floor(Math.random() * res1.totalCount);
-                console.log(res1.results[random_quotes].content);
-                $('#quote-body').html(res1.results[random_quotes].content);
-                $('#author').html(res1.results[random_quotes].author);
+                let list =`<h2 id="title" style="text-align:center;margin:25px;background-color: #281970;color:white">
+                    <strong>Search ${author_name}</strong>
+                    </h2>`;
+                for(let i = 0;i < res1.totalCount; i++){
+                    console.log(res1.results[i].content);
+                   list += `<div class='card' style='margin:20px'>
+                    <div class='card-header'>${res1.results[i].author}</div>
+                    <div class='card-body' style="font-size:20px;text-align:center">${res1.results[i].content}</div>
+                    </div>`;
+                    $('#list_quotes').html(list);
+                }
+               
                 $('#search').html('search');
+                // let random_quotes = Math.floor(Math.random() * res1.totalCount);
+                // console.log(res1.results[random_quotes].content);
+                // $('#quote-body').html(res1.results[random_quotes].content);
+                // $('#author').html(res1.results[random_quotes].author);
+                // $('#search').html('search');
+
             },
             error: function(){
                 alert("check Spelling");
